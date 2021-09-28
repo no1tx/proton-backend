@@ -144,6 +144,46 @@ async def process_doc(request: Request, doc_id=None):
 
     Тип зависит от указанного в теле запроса, действие с документом зависит от метода запроса.
 
+``{
+    "id": 30,
+    "tag": "1",
+    "contract": "1",
+    "type": 1,
+    "sender": 2,
+    "receiver": 1,
+    "transport_type": "Авто",
+    "transport_tag": "1111",
+    "send_date": "2021-09-01T00:00:00",
+    "receive_date": "2021-09-29T00:00:00",
+    "danger_class": "1",
+    "port": 1,
+    "object": "1-СВ3",
+    "place": 1,
+    "big": 1,
+    "extra": "121212",
+    "entities": [
+        {
+            "id": 7,
+            "pipe_tag": null,
+            "name": "1",
+            "big": 1,
+            "inplace_count": "1",
+            "package": 2,
+            "segment_number": "1",
+            "weight": 1.0,
+            "height": 2.0,
+            "width": null,
+            "diameter": 1.0,
+            "thickness": 2.0,
+            "fu": 2.0,
+            "place_number": 1,
+            "extra": "121212",
+            "input_doc": 30,
+            "output_doc": null
+        }
+    ]
+}``
+
     :param request:
     :param doc_id:
     :return:
