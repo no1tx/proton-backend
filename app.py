@@ -225,13 +225,11 @@ async def process_doc(request: Request, doc_id=None):
             doc.save()
             return jsonable_encoder(doc.serialized)
         except KeyError as e:
+            doc.delete()
             return jsonable_encoder(dict(missing_key=e.args))
-            doc.query.delete()
-            doc.query.commit()
         except Exception as e:
+            doc.delete()
             return Response(str(e.args), status_code=500)
-            doc.query.delete()
-            doc.query.commit()
 
 
 if __name__ == '__main__':
