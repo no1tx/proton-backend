@@ -360,8 +360,8 @@ class Entity(Model):
         if fu:
             self.fu = fu
         else:
-            v = (diameter ** 2) * height
-            if self.weight > v:
+            v = (float(diameter) ** 2) * float(height)
+            if float(self.weight) > v:
                 self.fu = self.weight
             else:
                 self.fu = v
