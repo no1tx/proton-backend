@@ -124,6 +124,7 @@ async def get_properties(property):
 @app.get("/api/v1/doc")
 @app.get("/api/v1/doc/{doc_id}")
 @app.put("/api/v1/doc")
+@app.put("/api/v1/doc/{doc_id}")
 @app.patch("/api/v1/doc/{doc_id}")
 async def process_doc(request: Request, doc_id=None):
     """
