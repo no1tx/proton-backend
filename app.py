@@ -116,7 +116,7 @@ async def get_properties(property):
     :param property:
     :return:
     """
-    collection = class_table[property].all()
+    collection = class_table[property].get_all()
     data = serialize_collection(collection)
     return jsonable_encoder(data)
 
