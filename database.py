@@ -61,8 +61,13 @@ class Contragent(Model):
 
     @staticmethod
     def get_by_name(name):
-        contragent = Contragent.query.filter_by(name=name).one_or_none()
+        contragent = session.query(Contragent).filter_by(name=name).one_or_none()
         return contragent
+
+    @staticmethod
+    def get_all():
+        data = session.query(Contragent).all()
+        return data
 
     @property
     def serialized(self):
@@ -84,6 +89,11 @@ class Contract(Model):
     id = Column(String, primary_key=True)
     contragent = Column(Integer, ForeignKey('contragent.id'))
 
+    @staticmethod
+    def get_all():
+        data = session.query(Contragent).all()
+        return data
+
 
 class EntityClass(Model):
     __tablename__ = 'entity_class'
@@ -92,8 +102,13 @@ class EntityClass(Model):
 
     @staticmethod
     def get_by_name(name):
-        entity_class = EntityClass.query.filter_by(name=name).one_or_none()
+        entity_class = session.query(EntityClass).filter_by(name=name).one_or_none()
         return entity_class
+
+    @staticmethod
+    def get_all():
+        data = session.query(EntityClass).all()
+        return data
 
     @property
     def serialized(self):
@@ -118,8 +133,13 @@ class TransportType(Model):
 
     @staticmethod
     def get_by_name(name):
-        transport_type = TransportType.query.filter_by(name=name).one_or_none()
+        transport_type = session.query(TransportType).filter_by(name=name).one_or_none()
         return transport_type
+
+    @staticmethod
+    def get_all():
+        data = session.query(TransportType).all()
+        return data
 
     @property
     def serialized(self):
@@ -144,8 +164,13 @@ class Transport(Model):
 
     @staticmethod
     def get_by_tag(tag):
-        transport = Transport.query.filter_by(tag=tag).one_or_none()
+        transport = session.query(Transport).filter_by(tag=tag).one_or_none()
         return transport
+
+    @staticmethod
+    def get_all():
+        data = session.query(Transport).all()
+        return data
 
     @property
     def serialized(self):
@@ -179,8 +204,13 @@ class Big(Model):
 
     @staticmethod
     def get_by_name(name):
-        big = Big.query.filter_by(name=name).one_or_none()
+        big = session.query(Big).filter_by(name=name).one_or_none()
         return big
+
+    @staticmethod
+    def get_all():
+        data = session.query(Big).all()
+        return data
 
     @property
     def serialized(self):
@@ -214,8 +244,13 @@ class Place(Model):
 
     @staticmethod
     def get_by_name(name):
-        place = Place.query.filter_by(name=name).one_or_none()
+        place = session.query(Place).filter_by(name=name).one_or_none()
         return place
+
+    @staticmethod
+    def get_all():
+        data = session.query(Place).all()
+        return data
 
     @property
     def serialized(self):
@@ -249,8 +284,13 @@ class Package(Model):
 
     @staticmethod
     def get_by_name(name):
-        package = Package.query.filter_by(name=name).one_or_none()
+        package = session.query(Package).filter_by(name=name).one_or_none()
         return package
+
+    @staticmethod
+    def get_all():
+        data = session.query(Package).all()
+        return data
 
     @property
     def serialized(self):
@@ -328,13 +368,18 @@ class Entity(Model):
 
     @staticmethod
     def get_by_name(name):
-        entity = Entity.query.filter_by(name=name).one_or_none()
+        entity = session.query(Entity).filter_by(name=name).one_or_none()
         return entity
 
     @staticmethod
     def get(id):
-        entity = Entity.query.filter_by(id=id).one_or_none()
+        entity = session.query(Entity).filter_by(id=id).one_or_none()
         return entity
+
+    @staticmethod
+    def get_all():
+        data = session.query(Entity).all()
+        return data
 
     @property
     def serialized(self):
@@ -386,8 +431,13 @@ class DocType(Model):
 
     @staticmethod
     def get_by_name(name):
-        doc_type = DocType.query.filter_by(name=name).one_or_none()
+        doc_type = session.query(DocType).filter_by(name=name).one_or_none()
         return doc_type
+
+    @staticmethod
+    def get_all():
+        data = session.query(DocType).all()
+        return data
 
     @property
     def serialized(self):
@@ -421,8 +471,13 @@ class Port(Model):
 
     @staticmethod
     def get_by_name(name):
-        port = Port.query.filter_by(name=name).one_or_none()
+        port = session.query(Port).filter_by(name=name).one_or_none()
         return port
+
+    @staticmethod
+    def get_all():
+        data = session.query(Port).all()
+        return data
 
     @property
     def serialized(self):
@@ -455,8 +510,13 @@ class Object(Model):
 
     @staticmethod
     def get(id):
-        object = Object.query.filter_by(id=id).one_or_none()
+        object = session.query(Object).filter_by(id=id).one_or_none()
         return object
+
+    @staticmethod
+    def get_all():
+        data = session.query(Object).all()
+        return data
 
     @property
     def serialized(self):
@@ -481,6 +541,7 @@ class Object(Model):
             LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
             LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
             session.rollback()
+
 
 class MovementDoc(Model):
     __tablename__ = 'movement_doc'
@@ -563,6 +624,11 @@ class MovementDoc(Model):
 class People(Model):
     __tablename__ = 'people'
     id = Column(Integer, primary_key=True, autoincrement=True)
+
+    @staticmethod
+    def get_all():
+        data = session.query(People).all()
+        return data
 
 
 Model.metadata.create_all(dbengine)
