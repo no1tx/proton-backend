@@ -78,11 +78,23 @@ app.openapi = custom_openapi
 
 @app.get("/api/v1/ping")
 async def ping():
+    """
+    Понг блять.
+
+
+    :return:
+    """
     return jsonable_encoder(dict(alive=True))
 
 
 @app.get("/api/v1/entity/{entity_id}")
 async def entity_info(entity_id):
+    """
+    Получить развернутую информацию по грузопозиции.
+
+    :param entity_id:
+    :return:
+    """
     entity = Entity.get(entity_id)
     if not entity:
         return Response(json.dumps(dict(reason="Not Found")), status_code=404)
