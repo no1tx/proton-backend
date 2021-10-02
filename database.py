@@ -160,7 +160,7 @@ class Transport(Model):
     __tablename__ = 'transport'
     id = Column(Integer, autoincrement=True, primary_key=True)
     tag = Column(String)
-    type = Column(String, ForeignKey('transport_type.name'))
+    type = Column(Integer, ForeignKey('transport_type.id'))
 
     @staticmethod
     def get_by_tag(tag):
