@@ -551,7 +551,7 @@ class MovementDoc(Model):
     type = Column(Integer, ForeignKey('doc_type.id'))
     sender = Column(Integer, ForeignKey('contragent.id'))
     receiver = Column(Integer, ForeignKey('contragent.id'))
-    transport_type = Column(Integer, ForeignKey('transport.type'), nullable=True)
+    transport_type = Column(Integer, nullable=True)
     transport_tag = Column(String, nullable=True)
     send_date = Column(DateTime, nullable=True)
     receive_date = Column(DateTime, nullable=True)
