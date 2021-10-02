@@ -322,7 +322,7 @@ class Entity(Model):
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     pipe_tag = Column(String, nullable=True)
     name = Column(String, ForeignKey('entity_class.name'), index=True)
-    big = Column(String, ForeignKey('big.id'))
+    big = Column(Integer, ForeignKey('big.id'))
     inplace_count = Column(String, nullable=True)
     package = Column(Integer, ForeignKey('package.id'), index=True, nullable=True)
     segment_number = Column(String, unique=True, nullable=True)
