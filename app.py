@@ -171,7 +171,7 @@ async def process_doc(request: Request, doc_id=None):
             "package": 2,
             "segment_number": "1",
             "weight": 1.0,
-            "height": 2.0,
+            "lenght": 2.0,
             "width": null,
             "diameter": 1.0,
             "thickness": 2.0,
