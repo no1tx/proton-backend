@@ -319,7 +319,7 @@ class Package(Model):
 
 class Entity(Model):
     __tablename__ = 'entity'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     pipe_tag = Column(String, nullable=True)
     name = Column(String, ForeignKey('entity_class.name'), index=True)
     big = Column(String, ForeignKey('big.id'))
@@ -545,13 +545,13 @@ class Object(Model):
 
 class MovementDoc(Model):
     __tablename__ = 'movement_doc'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     tag = Column(String, nullable=True)
     contract = Column(String, nullable=True, index=True)
     type = Column(Integer, ForeignKey('doc_type.id'))
     sender = Column(Integer, ForeignKey('contragent.id'))
     receiver = Column(Integer, ForeignKey('contragent.id'))
-    transport_type = Column(String, ForeignKey('transport.type'))
+    transport_type = Column(Integer, ForeignKey('transport.type'))
     transport_tag = Column(String, ForeignKey('transport.tag'))
     send_date = Column(DateTime, nullable=True)
     receive_date = Column(DateTime, nullable=True)
