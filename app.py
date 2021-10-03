@@ -233,12 +233,10 @@ async def process_doc(request: Request, doc_id=None):
             to_doc = []
             for _ in req["entities"]:
                 LOGGER.log(logging.INFO, msg="Process entity %s from doc %s" % (_["name"], doc.id))
-                exist = Entity.get_by_name(_['name'])
-                if not exist:
-                    entity_class = EntityClass.get_by_name(_["name"])
-                    if not entity_class:
-                        _entity_class = EntityClass(name=_["name"])
-                        _entity_class.save()
+                entity_class = EntityClass.get_by_name(_["name"])
+                if not entity_class:
+                    _entity_class = EntityClass(name=_["name"])
+                    _entity_class.save()
                 if 'fu' in _:
                     entity = Entity(
                         name=_['name'],
