@@ -136,8 +136,8 @@ async def get_properties(property):
 @app.get("/api/v1/doc")
 @app.get("/api/v1/doc/{doc_id}")
 @app.put("/api/v1/doc")
-@app.put("/api/v1/doc/{doc_id}")
 @app.patch("/api/v1/doc/{doc_id}")
+@app.delete("/api/v1/doc/{doc_id}")
 async def process_doc(request: Request, doc_id=None):
     """
     Маршрут для обработки документа движения.
@@ -324,10 +324,27 @@ async def process_doc(request: Request, doc_id=None):
                     entity.extra = _['extra']
                     entity.save(modify=True)
                 doc.save(modify=True)
+                return jsonable_encoder(dict(success=True))
             except KeyError as e:
-                return jsonable_encoder(dict(missing_key=e.args))
+                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
             except Exception as e:
-                return Response(str(e.args), status_code=500)
+                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+        else:
+            return Response(jsonable_encoder(dict(error=True, message="Not Found")), status_code=404)
+    elif request.method == "DELETE":
+        doc = MovementDoc.get(id)
+        if doc:
+            try:
+                for _ in doc.entities:
+                    entity = Entity.get(_)
+                    entity.delete()
+                doc.delete()
+            except KeyError as e:
+                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+            except Exception as e:
+                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+        else:
+            return Response(jsonable_encoder(dict(error=True, message="Not Found")), status_code=404)
 
 
 if __name__ == '__main__':
