@@ -277,10 +277,10 @@ async def process_doc(request: Request, doc_id=None):
             return jsonable_encoder(doc.serialized)
         except KeyError as e:
             doc.delete()
-            return jsonable_encoder(dict(missing_key=e.args))
+            return json.dumps(dict(missing_key=e.args))
         except Exception as e:
             doc.delete()
-            return Response(str(e.args), status_code=500)
+            return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
     elif request.method == 'PATCH':
         doc = MovementDoc.get(doc_id)
         if doc:
@@ -326,11 +326,11 @@ async def process_doc(request: Request, doc_id=None):
                 doc.save(modify=True)
                 return jsonable_encoder(dict(success=True))
             except KeyError as e:
-                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+                return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
             except Exception as e:
-                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+                return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
         else:
-            return Response(jsonable_encoder(dict(error=True, message="Not Found")), status_code=404)
+            return Response(json.dumps(dict(error=True, message="Not Found")), status_code=404)
     elif request.method == "DELETE":
         doc = MovementDoc.get(doc_id)
         if doc:
@@ -340,11 +340,11 @@ async def process_doc(request: Request, doc_id=None):
                     entity.delete()
                 doc.delete()
             except KeyError as e:
-                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+                return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
             except Exception as e:
-                return Response(jsonable_encoder(dict(error=True, details=e.args)), status_code=500)
+                return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
         else:
-            return Response(jsonable_encoder(dict(error=True, message="Not Found")), status_code=404)
+            return Response(json.dumps(dict(error=True, message="Not Found")), status_code=404)
 
 
 if __name__ == '__main__':
