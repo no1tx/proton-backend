@@ -586,7 +586,7 @@ class MovementDoc(Model):
 
     @staticmethod
     def get(id):
-        doc = session.query(MovementDoc).filter_by(id=id)
+        doc = session.query(MovementDoc).filter_by(id=id).one_or_none()
         return doc
 
     @property
