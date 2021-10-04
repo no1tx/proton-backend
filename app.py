@@ -336,7 +336,7 @@ async def process_doc(request: Request, doc_id=None):
         if doc:
             try:
                 for _ in doc.entities:
-                    entity = Entity.get(_)
+                    entity = Entity.get(int(_))
                     entity.delete()
                 doc.delete()
             except KeyError as e:
