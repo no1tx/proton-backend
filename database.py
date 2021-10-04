@@ -74,14 +74,23 @@ class Contragent(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
 
 class Contract(Model):
@@ -93,6 +102,24 @@ class Contract(Model):
     def get_all():
         data = session.query(Contragent).all()
         return data
+
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
 
 class EntityClass(Model):
@@ -115,14 +142,23 @@ class EntityClass(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
 
 class TransportType(Model):
@@ -146,14 +182,23 @@ class TransportType(Model):
         data = dict(id=self.id, type=self.name)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
 
 class Transport(Model):
@@ -217,14 +262,23 @@ class Big(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
@@ -268,6 +322,7 @@ class Place(Model):
                 session.rollback()
         else:
             try:
+                session.flush()
                 session.commit()
             except Exception as e:
                 LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
@@ -316,6 +371,7 @@ class Package(Model):
                 session.rollback()
         else:
             try:
+                session.flush()
                 session.commit()
             except Exception as e:
                 LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
@@ -430,6 +486,7 @@ class Entity(Model):
                 session.rollback()
         else:
             try:
+                session.flush()
                 session.commit()
             except Exception as e:
                 LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
@@ -468,14 +525,23 @@ class DocType(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
@@ -508,14 +574,23 @@ class Port(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
@@ -547,14 +622,23 @@ class Object(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.flush()
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
@@ -636,6 +720,7 @@ class MovementDoc(Model):
                 session.rollback()
         else:
             try:
+                session.flush()
                 session.commit()
             except Exception as e:
                 LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
