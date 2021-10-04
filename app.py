@@ -321,8 +321,8 @@ async def process_doc(request: Request, doc_id=None):
                     entity.thickness = _['thickness']
                     entity.place_number = _['place_number']
                     entity.extra = _['extra']
-                    entity.save()
-                doc.save()
+                    entity.save(modify=True)
+                doc.save(modify=True)
             except KeyError as e:
                 return jsonable_encoder(dict(missing_key=e.args))
             except Exception as e:
