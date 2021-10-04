@@ -335,7 +335,7 @@ async def process_doc(request: Request, doc_id=None):
         doc = MovementDoc.get(doc_id)
         if doc:
             try:
-                for _ in doc.entities:
+                for _ in json.loads(doc.entities):
                     entity = Entity.get(int(_))
                     entity.delete()
                 doc.delete()
