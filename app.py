@@ -308,7 +308,7 @@ async def process_doc(request: Request, doc_id=None):
                 doc.receive_date = datetime.strptime(req["receive_date"], "%Y-%m-%d")
                 doc.extra = req["extra"]
                 doc.contract = req["contract"]
-                for _ in req.entities:
+                for _ in req['entities']:
                     entity = Entity.get(_['id'])
                     entity.name = _['name']
                     entity.big = doc.big
