@@ -199,7 +199,7 @@ async def process_doc(request: Request, doc_id=None):
         else:
             data = MovementDoc.get(doc_id)
             return jsonable_encoder(data)
-    else:
+    elif request.method == 'PUT':
         request_body = b''
         async for chunk in request.stream():
             request_body += chunk
@@ -281,6 +281,52 @@ async def process_doc(request: Request, doc_id=None):
         except Exception as e:
             doc.delete()
             return Response(str(e.args), status_code=500)
+    elif request.method == 'PATCH':
+        doc = MovementDoc.get(doc_id)
+        if doc:
+            request_body = b''
+            async for chunk in request.stream():
+                request_body += chunk
+            try:
+                message = json.loads(request_body)
+            except JSONDecodeError:
+                raise HTTPException(400, detail="Некорректный JSON")
+            try:
+                req = message
+                doc.type = req['type']
+                doc.port = req['port']
+                doc.sender = req['sender']
+                doc.receiver = req['receiver']
+                doc.place = req['place']
+                doc.transport_type = req['transport_type']
+                doc.object = req['object']
+                doc.danger_class = req["danger_class"]
+                doc.big = req["big"]
+                doc.transport_tag = req["transport_tag"]
+                doc.tag = req["tag"]
+                doc.send_date = datetime.strptime(req["send_date"], "%Y-%m-%d")
+                doc.receive_date = datetime.strptime(req["receive_date"], "%Y-%m-%d")
+                doc.extra = req["extra"]
+                doc.contract = req["contract"]
+                for _ in req.entities:
+                    entity = Entity.get(_['id'])
+                    entity.name = _['name']
+                    entity.big = doc.big
+                    entity.inplace_count = _['inplace_count']
+                    entity.package = _['pipe_tag']
+                    entity.weight = _['weight']
+                    entity.height = _['length']
+                    entity.segment_number = _['segment_number']
+                    entity.diameter = _['diameter']
+                    entity.thickness = _['thickness']
+                    entity.place_number = _['place_number']
+                    entity.extra = _['extra']
+                    entity.save()
+                doc.save()
+            except KeyError as e:
+                return jsonable_encoder(dict(missing_key=e.args))
+            except Exception as e:
+                return Response(str(e.args), status_code=500)
 
 
 if __name__ == '__main__':
