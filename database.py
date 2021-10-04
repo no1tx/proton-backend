@@ -257,14 +257,22 @@ class Place(Model):
         data = Serializer.serialize(self)
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if not modify:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
@@ -298,7 +306,7 @@ class Package(Model):
         return data
 
     def save(self, modify=False):
-        if modify is False:
+        if not modify:
             try:
                 session.add(self)
                 session.commit()
@@ -412,7 +420,7 @@ class Entity(Model):
         )
 
     def save(self, modify=False):
-        if modify is False:
+        if not modify:
             try:
                 session.add(self)
                 session.commit()
@@ -618,7 +626,7 @@ class MovementDoc(Model):
         return data
 
     def save(self, modify=False):
-        if modify is False:
+        if not modify:
             try:
                 session.add(self)
                 session.commit()
