@@ -332,7 +332,7 @@ async def process_doc(request: Request, doc_id=None):
         else:
             return Response(jsonable_encoder(dict(error=True, message="Not Found")), status_code=404)
     elif request.method == "DELETE":
-        doc = MovementDoc.get(id)
+        doc = MovementDoc.get(doc_id)
         if doc:
             try:
                 for _ in doc.entities:
