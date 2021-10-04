@@ -617,14 +617,22 @@ class MovementDoc(Model):
         data["entities"] = entity_buf
         return data
 
-    def save(self):
-        try:
-            session.add(self)
-            session.commit()
-        except Exception as e:
-            LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
-            LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
-            session.rollback()
+    def save(self, modify=False):
+        if modify is False:
+            try:
+                session.add(self)
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
+        else:
+            try:
+                session.commit()
+            except Exception as e:
+                LOGGER.log(level=logging.ERROR, msg="Database error: %s " % e.args)
+                LOGGER.log(level=logging.ERROR, msg="Rollback transaction.")
+                session.rollback()
 
     def delete(self):
         try:
