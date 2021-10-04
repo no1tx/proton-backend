@@ -339,6 +339,7 @@ async def process_doc(request: Request, doc_id=None):
                     entity = Entity.get(int(_))
                     entity.delete()
                 doc.delete()
+                return jsonable_encoder(dict(success=True))
             except KeyError as e:
                 return Response(json.dumps(dict(error=True, details=e.args)), status_code=500)
             except Exception as e:
